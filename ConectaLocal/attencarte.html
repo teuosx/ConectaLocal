@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+  <title>Cadastrar Encarte</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    .cabecalho {
+      display: flex;
+      align-items: center;
+      padding: 16px 32px;
+      background-color: #243a69;
+      color: white;
+    }
+
+    .botao-voltar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .botao-voltar img {
+      width: 32px;
+      height: 32px;
+      filter: brightness(0) invert(1);
+    }
+
+    .editar-produto {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .editar-produto h1 {
+      font-size: 1.6rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: #333;
+    }
+
+    .editar-produto label {
+      font-size: 16px;
+      color: #4F4F4F;
+      margin-bottom: 8px;
+    }
+
+    .editar-produto input[type="file"],
+    .editar-produto input[type="date"] {
+      border-radius: 16px;
+      background: #CCCCCC;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 22px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      transition: border-color 0.3s ease;
+    }
+
+    .editar-produto button {
+      width: 48%;
+      padding: 12px;
+      margin: 10px 1%;
+      background-color: #243a69;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .editar-produto button:hover {
+      background-color: #4098D0;
+    }
+
+    .editar-produto .deletar {
+      background-color: #243a69;
+    }
+  </style>
+</head>
+<body>
+  <cabecalho class="cabecalho">
+    <a href="conf.php" class="botao-voltar">
+      <img src="voltar.svg" alt="Voltar">
+    </a>
+  </cabecalho>
+
+  <div class="editar-produto">
+    <h1>Cadastrar Encarte</h1>
+    
+    <form action="processar_encarte.php" method="POST" enctype="multipart/form-data">
+      <label for="imagem_encarte">Selecione a imagem do encarte:</label>
+      <input type="file" id="imagem_encarte" name="imagem_encarte" required>
+  
+      <label for="data_encerramento">Data de encerramento:</label>
+      <input type="date" id="data_encerramento" name="data_encerramento" required>
+  
+      <div style="display: flex; justify-content: space-between;">
+        <button type="submit">Salvar</button>
+        <button type="button" class="deletar">Excluir</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

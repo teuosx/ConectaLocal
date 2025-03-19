@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+  <title>Cadastrar Produto</title>
+  <style>
+    body{
+      background-color: #f4f4f4;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .cabecalho {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 16px;
+      background-color: #243a69;
+      color: white;
+    }
+
+    .menu {
+      cursor: pointer;
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .menu span {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      display: block;
+    }
+
+    .cabecalho-icones {
+      display: flex;
+      gap: 48px;
+      padding-left: 88px;
+      padding-right: 56px;
+    }
+
+    .cabecalho-icones a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.3s ease;
+      padding: 6px;
+      border-radius: 8px;
+    }
+
+    .cabecalho-icones a img.icone {
+      width: 28px;
+      height: 28px;
+    }
+
+    .cabecalho-icones a:hover,
+    .cabecalho-icones a:focus {
+      background-color: #4098D0;
+    }
+
+    .cabecalho-pesquisa {
+      display: flex;
+      align-items: center;
+      background-color: #3F5A96;
+      border-radius: 12px;
+      padding: 10px 10px;
+      flex-grow: 1;
+      margin: 0 20px;
+      color: white;
+    }
+
+    .cabecalho-pesquisa input {
+      flex-grow: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: #D3D3D3;
+      padding-left: 8px;
+    }
+
+    .cabecalho-pesquisa input::placeholder {
+      color: #D3D3D3;
+    }
+
+    .cabecalho-pesquisa img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .grupo_icones {
+      margin-left: 72px;
+      margin-right: 72px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .grupo_icones img {
+      width: 28px;
+      height: 28px;
+      margin-right: 2px;
+    }
+
+    .rodape-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: #E8E8E8;
+      border-radius: 8px;
+      width: 140px;
+      margin-top: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .rodape-menu a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      color: #4F4F4F;
+      text-decoration: none;
+      font-size: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .rodape-menu a img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .rodape-menu a:hover {
+      background-color: #d3d1d1;
+      border-radius: 10px;
+    }
+
+    .barra_lateral {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 80px;
+      background-color: #243a69;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 60px;
+      z-index: 1000;
+    }
+
+    .barra_lateral a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      transition: all 0.3s ease;
+    }
+
+    .barra_lateral a img.icone {
+      width: 28px;
+      height: 28px;
+    }
+
+    .barra_lateral a:hover,
+    .barra_lateral a:focus {
+      background-color: #4098D0;
+      border-radius: 8px;
+    }
+
+    .barra_lateral.open {
+      transform: translateX(0);
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      z-index: 999;
+    }
+
+    .overlay.show {
+      display: block;
+    }
+
+    @media (max-width: 864px) {
+      .cabecalho-icones {
+        display: none;
+      }
+
+      .menu {
+        display: flex;
+      }
+
+      .cabecalho-pesquisa {
+        max-width: 80%;
+        margin: 0 auto;
+      }
+
+      .grupo_icones {
+        display: none;
+      }
+
+      .barra_lateral {
+        width: 80px;
+      }
+
+      .barra_lateral a {
+        padding: 10px 10px;
+        margin-bottom: 32px;
+        transition: background-color 0.2s linear;
+        border-radius: 12px;
+      }
+
+      .barra_lateral a img[src="porta.svg"],
+      .barra_lateral a img[src="conf.svg"],
+      .rodape-menu a img[src="porta.svg"],
+      .rodape-menu a img[src="conf.svg"] {
+        filter: brightness(0) invert(1);
+      }
+
+      .barra_lateral a:last-child {
+        margin-top: auto;
+        margin-bottom: 24px;
+      }
+    }
+
+    .formulario {
+      font-size: 14px;
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      max-width: 500px;
+      margin: 40px auto 0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .formulario h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .grupo-formulario {
+      margin-bottom: 15px;
+    }
+
+    .grupo-formulario label {
+      font-weight: bolder;
+      font-size: 0.9rem;
+      color: #555;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .grupo-formulario input[type="text"], 
+    .grupo-formulario input[type="date"], 
+    .grupo-formulario input[type="file"], 
+    .grupo-formulario input {
+      font-size: 14px;
+      background-color: #cccccc;
+      width: 100%;
+      padding: 10px;
+      border-radius: 16px;
+      border: 1px solid #ccc;
+    }
+
+    .grupo-formulario input[type="submit"] {
+      background-color: #243a69;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 16px;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    .grupo-formulario input[type="submit"]:hover {
+      background-color: #4098D0;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+  <cabecalho class="cabecalho">
+    <div class="menu" id="menu-btn" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="cabecalho-icones">
+      <a href="#"><img src="casa.svg" alt="Home" class="icone"></a>
+      <a href="#"><img src="mercado.svg" alt="Mercado" class="icone"></a>
+      <a href="#"><img src="pao.svg" alt="Pão" class="icone"></a>
+    </div>
+    <div class="cabecalho-pesquisa">
+      <input type="text" placeholder="Pesquisar">
+      <img src="lupa.svg" alt="Buscar" class="pesquisa-icone">
+    </div>
+    <div class="grupo_icones" onclick="toggleDropdown()">
+      <img src="usu.svg" alt="Perfil" class="grupo_icones">
+      <span>Perfil</span>
+      <img src="seta.svg" alt="Seta" class="seta-iconseta">
+      <div class="rodape-menu" id="rodape-menu">
+        <a href="#"><img src="conf.svg" alt="Opções"> Opções</a>
+        <a href="#"><img src="porta.svg" alt="Sair"> Sair</a>
+      </div>
+    </div>
+  </cabecalho>
+
+  <nav class="barra_lateral" id="barra_lateral">
+    <a href="#"><img src="casa.svg" alt="Home" class="icone"></a>
+    <a href="#"><img src="mercado.svg" alt="Mercado" class="icone"></a>
+    <a href="#"><img src="pao.svg" alt="Pão" class="icone"></a>
+    <a href="#"><img src="conf.svg" alt="Configurações" class="icone"></a>
+    <a href="#"><img src="porta.svg" alt="Sair" class="icone"></a>
+  </nav>
+
+  <div class="formulario">
+    <h1>Cadastrar Produto</h1>
+    <form action="processar_produto.php" method="post" enctype="multipart/form-data">
+        <div class="grupo-formulario">
+            <label for="id_comercio">ID do Mercado:</label>
+            <input type="number" placeholder="Digite o id do mercado" name="id_comercio" id="id_comercio" required>
+        </div>
+
+        <div class="grupo-formulario">
+            <label for="nome_produto">Nome do Produto:</label>
+            <input type="text" placeholder="Digite o nome do produto" name="nome_produto" id="nome_produto" required>
+        </div>
+
+        <div class="grupo-formulario">
+            <label for="descricao_produto">Descrição do Produto:</label>
+            <input type="text" placeholder="Digite a descrição do produto" name="descricao_produto" id="descricao_produto" rows="4" required></input>
+        </div>
+
+        <div class="grupo-formulario">
+            <label for="imagem_produto">Selecione a Imagem do Produto:</label>
+            <input type="file" name="imagem_produto" id="imagem_produto" required>
+        </div>
+
+        <div class="grupo-formulario">
+            <label for="data_encerramento">Data de Encerramento:</label>
+            <input type="date" name="data_encerramento" id="data_encerramento" maxlength="10" required>
+        </div>
+
+        <div class="grupo-formulario">
+            <input type="submit" value="Cadastrar produto" id="botao-enviar">
+        </div>
+    </form>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      const barra_lateral = document.getElementById('barra_lateral');
+      const overlay = document.getElementById('overlay');
+      barra_lateral.classList.toggle('open');
+      overlay.classList.toggle('show');
+    }
+
+    function toggleDropdown() {
+      const rodape = document.getElementById('rodape-menu');
+      rodape.style.display = rodape.style.display === 'block' ? 'none' : 'block';
+    }
+
+    document.addEventListener('click', function(event) {
+      const barra_lateral = document.getElementById('barra_lateral');
+      const overlay = document.getElementById('overlay');
+      const profileGroup = document.querySelector('.grupo_icones');
+      const dropdownMenu = document.getElementById('rodape-menu');
+      if (!profileGroup.contains(event.target)) {
+        dropdownMenu.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
